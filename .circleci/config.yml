@@ -1,11 +1,40 @@
 version: 2.1
 
 jobs:
-  run_tests:
-    working_directory: ~/soda_api
-
+  build:
     docker:
       - image: circleci/node:latest
+
+    working_directory: ~/soda_api
+    
+    steps:
+      - checkout
+      - run: echo "Build"
+
+      - run:
+          name: Check Yarn version
+          command: yarn --version
+
+      - restore_cache:
+          name: Restore Yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      
+      - run:
+          name: Install dependecies
+          command: yarn install --immutable
+
+      - save_cache:
+          name: Save Yarn package cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+
+  test:
+    docker:
+      - image: circleci/node:latest
+
+    working_directory: ~/soda_api
 
     environment:
       PRIVATE_KEY: $PRIVATE_KEY
@@ -15,41 +44,25 @@ jobs:
       SMTP_PORT: $SMTP_PORT
       SMTP_USER: $SMTP_USER
       SMTP_PASS: $SMTP_PASS
-    
+
     steps:
       - checkout
+      - run: echo "Test"
 
-      - run: 
-          name: Check Yarn version
-          command: yarn --version
-      
-      - restore_cache:
-          name: Restore Yarn package cache
-          keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
-      
-      - run: 
-          name: Install dependencies
-          command: yarn install --immutable
-      
-      - save_cache:
-          name: Save Yarn package cache
-          key: 
-            - yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      
       - run:
-          name: Run test & coverage
+          name: Run test and coverage
           command: yarn test-cov
       
       - store_test_results:
-          path: ./test-results
+          path: ./test_results
       
       - store_artifacts:
-          path: ./test-results
+          path: ./test_results
 
 workflows:
-  build_test:
+  build_and_test:
     jobs:
-      - run_tests
+      - build
+      - test:
+          requires:
+            - build
