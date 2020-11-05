@@ -58,10 +58,10 @@ jobs:
           command: yarn test-cov
       
       - store_test_results:
-          path: ./test_results
+          path: test_results
       
       - store_artifacts:
-          path: ./test_results
+          path: test_results
 
 workflows:
   build_and_test:

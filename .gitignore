@@ -21,4 +21,4 @@ jspm_packages/
 dist/
 docs/
 .nyc_output/
-.test-results/
+test_results/
