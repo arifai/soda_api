@@ -4,7 +4,7 @@ orbs:
   codecov: codecov/codecov@1.1.1
 
 jobs:
-  build:
+  run_tests:
     working_directory: ~/soda_api
 
     docker:
@@ -23,25 +23,36 @@ jobs:
       - checkout
 
       - run: 
-        name: Check Yarn version
-        command: yarn --version
+          name: Check Yarn version
+          command: yarn --version
       
       - restore_cache:
-        name: Restore Yarn package cache
-        keys:
-          - yarn-packages-{{ checksum "yarn.lock" }}
+          name: Restore Yarn package cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
       
       - run: 
-        name: Install dependencies
-        command: yarn install --immutable
+          name: Install dependencies
+          command: yarn install --immutable
       
       - save_cache:
-        name: Save Yarn package cache
-        key: 
-          - yarn-packages-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/.cache/yarn
+          name: Save Yarn package cache
+          key: 
+            - yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
       
       - run:
-        name: Run test & coverage
-        command: yarn test-cov
+          name: Run test & coverage
+          command: yarn test-cov
+      
+      - store_test_results:
+          path: ./test-results
+      
+      - store_artifacts:
+          path: ./test-results
+
+workflows:
+  build_test:
+    jobs:
+      - run_tests

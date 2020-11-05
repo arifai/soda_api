@@ -20,3 +20,5 @@ jspm_packages/
 # Other
 dist/
 docs/
+.nyc_output/
+.test-results/
