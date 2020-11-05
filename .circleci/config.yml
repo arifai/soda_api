@@ -1,7 +1,47 @@
 version: 2.1
+
 orbs:
-  node: circleci/node@3.0.0
-workflows:
-  node-tests:
-    jobs:
-      - node/test
+  codecov: codecov/codecov@1.1.1
+
+jobs:
+  build:
+    working_directory: ~/soda_api
+
+    docker:
+      - image: circleci/node:latest
+
+    environment:
+      PRIVATE_KEY: $PRIVATE_KEY
+      DB_URL: $DB_URL
+      DB_URL_TEST: $DB_URL_TEST
+      SMTP_HOST: $SMTP_HOST
+      SMTP_PORT: $SMTP_PORT
+      SMTP_USER: $SMTP_USER
+      SMTP_PASS: $SMTP_PASS
+    
+    steps:
+      - checkout
+
+      - run: 
+        name: Check Yarn version
+        command: yarn --version
+      
+      - restore_cache:
+        name: Restore Yarn package cache
+        keys:
+          - yarn-packages-{{ checksum "yarn.lock" }}
+      
+      - run: 
+        name: Install dependencies
+        run: yarn install --immutable
+      
+      - save_cache:
+        name: Save Yarn package cache
+        key: 
+          - yarn-packages-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.cache/yarn
+      
+      - run:
+        name: Run test & coverage
+        command: yarn test-cov
