@@ -50,6 +50,10 @@ jobs:
       - run: echo "Test"
 
       - run:
+          name: Install dependecies
+          command: yarn install --immutable
+
+      - run:
           name: Run test and coverage
           command: yarn test-cov
       
