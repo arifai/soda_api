@@ -1,0 +1,8 @@
+{
+    "full_name": "User Test",
+    "email": "usertest@mail.com",
+    "phone_num": "081122334455",
+    "password": "$2b$15$PC6BDlMO7CDhjeRhYg3mGuP4e3LRaaP16L7fWgHiI7fKATHXTT1hq",
+    "active": true,
+    "__v": 0
+}

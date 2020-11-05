@@ -1,16 +1,49 @@
 {
-  "name": "soda_api",
+  "name": "smarak_api",
   "version": "0.1.0",
-  "description": "Smart Contract Mudhorobah API",
-  "main": "server.js",
+  "description": "Smart Contract Musyarakah API",
+  "main": "index.js",
   "repository": "https://github.com/megalodev/soda_api",
   "author": "Ahmad Rifa'i",
-  "license": "BSD-3-Clause License",
+  "license": "BSD-3-Clause",
+  "apidoc": {
+    "title": "SMARAK API Documentation",
+    "template": {
+      "withCompare": false
+    }
+  },
+  "scripts": {
+    "start": "babel-node --presets es2015 server",
+    "dev": "nodemon --exec babel-node --presets es2015 server",
+    "docs": "rm -rf docs/ && apidoc -i . -e node_modules -o docs",
+    "test": "cross-env NODE_ENV=test mocha --require babel-register tests/*.test.js --timeout 10000 --exit",
+    "test-cov": "yarn test && nyc report --reporter=text-lcov > coverage.lcov && codecov"
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "debug": "^4.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.10.9"
+    "handlebars": "4.5.0",
+    "http-status": "^1.4.2",
+    "joi": "^17.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.9",
+    "morgan": "^1.10.0",
+    "ms": "^2.1.2",
+    "nodemailer": "^6.4.14",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.2",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.4",
+    "nyc": "^15.1.0"
   }
 }

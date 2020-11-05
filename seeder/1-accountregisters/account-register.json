@@ -1,0 +1,9 @@
+{
+    "full_name": "User Test",
+    "email": "usertest@mail.com",
+    "phone_num": "081122334455",
+    "password": "$2b$15$PC6BDlMO7CDhjeRhYg3mGuP4e3LRaaP16L7fWgHiI7fKATHXTT1hq",
+    "token": "7262c0ba93b35748bec98eeff5836ec422e64b175949e6f6f26027654ff12cf722a24fd68bb646ea51735f6704f114aa",
+    "code": 123456,
+    "__v": 0
+}

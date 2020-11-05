@@ -13,6 +13,10 @@ lerna-debug.log*
 node_modules/
 jspm_packages/
 
-# Environment
+# Environments
 .env
 .env.test
+
+# Other
+dist/
+docs/
