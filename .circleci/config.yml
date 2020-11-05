@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  codecov: codecov/codecov@1.1.1
-
 jobs:
   run_tests:
     working_directory: ~/soda_api
