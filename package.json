@@ -17,7 +17,8 @@
     "dev": "nodemon --exec babel-node --presets es2015 server",
     "docs": "rm -rf docs/ && apidoc -i . -e node_modules -o docs",
     "test": "cross-env NODE_ENV=test mocha --require babel-register tests/*.test.js --timeout 10000 --exit",
-    "test-cov": "nyc yarn test --reporter mochawesome --reporter-options reportDir=test_results reportFilename=test-results && codecov"
+    "test-cov": "nyc yarn test --reporter mochawesome --reporter-options reportDir=test_results reportFilename=test-results && codecov",
+    "pm2": "pm2 start server.js --name smarak-api --interpreter ./node_modules/babel-cli/bin/babel-node.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
